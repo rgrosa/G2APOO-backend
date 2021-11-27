@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PropertyService {
 
-    ResponseResource getPropertyList(Long propertyId, List<Long> propertyStatusId) throws ResourceNotFoundException;
+    ResponseResource getPropertyList(Long propertyId, List<Long> propertyStatusId, Double priceMin, Double priceMax) throws ResourceNotFoundException;
 
     ResponseResource saveProperty(PropertyDTO propertyDTO, Long userId) throws ResourceNotFoundException;
 }

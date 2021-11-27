@@ -22,9 +22,11 @@ public class PropertyController {
     @GetMapping("/property")
     public ResponseEntity<ResponseResource> getPropertyList(
             @RequestParam(required = false) Long propertyId,
-            @RequestParam List<Long> propertyIdList
+            @RequestParam List<Long> propertyIdList,
+            @RequestParam(required = false) Double priceMin,
+            @RequestParam(required = false) Double priceMax
     ) throws Exception {
-        return ResponseEntity.ok().body(propertyService.getPropertyList(propertyId, propertyIdList));
+        return ResponseEntity.ok().body(propertyService.getPropertyList(propertyId, propertyIdList, priceMin, priceMax));
     }
 
     @CrossOrigin

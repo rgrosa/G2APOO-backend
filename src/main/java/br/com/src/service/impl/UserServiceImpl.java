@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setUserPassword(cryptPassword.encode(userDto.getUserPassword()));
         userEntity.setUserStatus(true);
         userEntity.setUserTypeId(userDto.getUserTypeId());
+        userEntity.setEmailContact(userDto.getEmailContact());
         userRepository.save(userEntity);
         return new ResponseResource(200,"Success", userEntity);
     }
@@ -53,6 +54,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setUserPassword(cryptPassword.encode(updateUserDTO.getUserPassword()));
         userEntity.setUserRealName(updateUserDTO.getUserRealName());
         userEntity.setUsername(updateUserDTO.getUsername());
+        userEntity.setEmailContact(updateUserDTO.getContactEmail());
         userRepository.save(userEntity);
         return new ResponseResource(200,"Success", userEntity);
     }

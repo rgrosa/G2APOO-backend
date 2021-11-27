@@ -18,6 +18,8 @@ public class PropertyEntity implements Serializable {
     private String propertyAddress;
     @Column(name = "PROPERTY_PRICE")
     private Double propertyPrice;
+    @Column(name = "LAST_PROPERTY_PRICE")
+    private Double lastPropertyPrice;
     @Column(name = "USER_ID")
     private int userId;
     @Column(name = "PROPERTY_STATUS_ID")
@@ -203,6 +205,14 @@ public class PropertyEntity implements Serializable {
         this.picture5x64 = picture5x64;
     }
 
+    public Double getLastPropertyPrice() {
+        return lastPropertyPrice;
+    }
+
+    public void setLastPropertyPrice(Double lastPropertyPrice) {
+        this.lastPropertyPrice = lastPropertyPrice;
+    }
+
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
@@ -213,21 +223,21 @@ public class PropertyEntity implements Serializable {
         updatedAt = LocalDateTime.now();
     }
 
-
     @Override
     public String toString() {
         return "PropertyEntity{" +
                 "propertyId=" + propertyId +
                 ", propertyAddress='" + propertyAddress + '\'' +
                 ", propertyPrice=" + propertyPrice +
+                ", lastPropertyPrice=" + lastPropertyPrice +
                 ", userId=" + userId +
                 ", propertyStatusId=" + propertyStatusId +
                 ", propertyOwnerName='" + propertyOwnerName + '\'' +
                 ", propertyOwnerEmail='" + propertyOwnerEmail + '\'' +
                 ", propertyOwnerTel='" + propertyOwnerTel + '\'' +
                 ", financed=" + financed +
-                ", ownerNamed='" + ownerNamed + '\'' +
-                ", negotiable='" + negotiable + '\'' +
+                ", ownerNamed=" + ownerNamed +
+                ", negotiable=" + negotiable +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", userEditedId=" + userEditedId +

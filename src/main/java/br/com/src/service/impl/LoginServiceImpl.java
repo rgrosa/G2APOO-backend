@@ -48,14 +48,12 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws ResourceNotFoundException {
-        log.info("loadUserByUsername - username = {}", username);
         UserEntity userEntity;
         try {
             userEntity = userRepository.findOneByUsernameAndUserStatus(username,true);
         } catch (Exception ex) {
             throw new ResourceNotFoundException(ex.getMessage());
         }
-        log.info("loadUserByUsername - username", username);
         return new LoggedUserDetailsDTO(makeLoggedUser(userEntity));
     }
 
@@ -73,7 +71,8 @@ public class LoginServiceImpl implements LoginService {
                 userEntity.getUserPassword(),
                 userEntity.getUserRealName(),
                 null,
-                userEntity.getUserId().intValue()
+                userEntity.getUserId().intValue(),
+                userEntity.getEmailContact()
         );
     }
 }

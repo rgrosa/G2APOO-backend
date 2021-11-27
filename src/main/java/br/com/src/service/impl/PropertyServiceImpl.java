@@ -19,8 +19,40 @@ public class PropertyServiceImpl implements PropertyService {
     PropertyRepository propertyRepository;
 
     @Override
-    public ResponseResource getPropertyList(Long propertyId, List<Long> propertyStatusId) throws ResourceNotFoundException {
-        Optional<List<PropertyEntity>> optionalPropertyList = propertyRepository.findAllByPropertyStatusIdIn(propertyStatusId);
+    public ResponseResource getPropertyList(Long propertyId, List<Long> propertyStatusId,  Double priceMin, Double priceMax) throws ResourceNotFoundException {
+        if(propertyId != null){
+            Optional<PropertyEntity> optionalProperty = propertyRepository.findOneByPropertyId(propertyId);
+            if(!optionalProperty.isPresent()){
+                return new ResponseResource(404,"Request failed, no property found for the id= "+propertyId,null);
+            }
+            return new ResponseResource(200,"Success",optionalProperty.get());
+        }
+        Optional<List<PropertyEntity>> optionalPropertyList;
+        if(priceMin == null && priceMax != null){
+            optionalPropertyList = propertyRepository.findAllByPropertyStatusIdInAndPropertyPriceLessThanEqual(propertyStatusId,priceMax);
+            if(!optionalPropertyList.isPresent()){
+                return new ResponseResource(404,"Request failed, no propertyList found" ,null);
+            }
+            return new ResponseResource(200,"Success",optionalPropertyList.get());
+        }
+
+        if(priceMax == null && priceMin != null ){
+            optionalPropertyList = propertyRepository.findAllByPropertyStatusIdInAndPropertyPriceGreaterThanEqual(propertyStatusId,priceMin);
+            if(!optionalPropertyList.isPresent()){
+                return new ResponseResource(404,"Request failed, no propertyList found" ,null);
+            }
+            return new ResponseResource(200,"Success",optionalPropertyList.get());
+        }
+
+        if(priceMin != null && priceMax != null){
+            optionalPropertyList = propertyRepository.findAllByPropertyStatusIdInAndPropertyPriceGreaterThanEqualAndPropertyPriceLessThanEqual(propertyStatusId, priceMin, priceMax);
+            if(!optionalPropertyList.isPresent()){
+                return new ResponseResource(404,"Request failed, no propertyList found" ,null);
+            }
+            return new ResponseResource(200,"Success",optionalPropertyList.get());
+        }
+
+        optionalPropertyList = propertyRepository.findAllByPropertyStatusIdIn(propertyStatusId);
         if(!optionalPropertyList.isPresent()){
             return new ResponseResource(404,"Request failed, no propertyList found for the propertyStatusId= "+propertyStatusId,null);
         }
@@ -34,6 +66,7 @@ public class PropertyServiceImpl implements PropertyService {
             Optional<PropertyEntity> optionalProperty = propertyRepository.findOneByPropertyId(propertyDTO.getPropertyId());
             if (optionalProperty.isPresent()) {
                 propertyEntity = optionalProperty.get();
+                propertyEntity.setLastPropertyPrice(propertyEntity.getPropertyPrice());
             }
         }
         propertyEntity.setPropertyAddress(propertyDTO.getPropertyAddress());

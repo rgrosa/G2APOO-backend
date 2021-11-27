@@ -10,6 +10,7 @@ public class UpdateUserDTO implements Serializable {
     private String userRealName;
     private String userPassword;
     private String currentUserPassword;
+    private String contactEmail;
 
     public String getUsername() {
         return username;
@@ -51,6 +52,14 @@ public class UpdateUserDTO implements Serializable {
         this.userId = userId;
     }
 
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
     @Override
     public String toString() {
         return "UpdateUserDTO{" +
@@ -59,6 +68,7 @@ public class UpdateUserDTO implements Serializable {
                 ", userRealName='" + userRealName + '\'' +
                 ", userPassword='" + userPassword + '\'' +
                 ", currentUserPassword='" + currentUserPassword + '\'' +
+                ", contactEmail='" + contactEmail + '\'' +
                 '}';
     }
 }

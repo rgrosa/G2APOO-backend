@@ -12,6 +12,7 @@ public class UserDTO implements Serializable {
     private String username;
     private String userRealName;
     private String userPassword;
+    private String emailContact;
     @JsonProperty
     private boolean userStatus;
     private int userTypeId;
@@ -56,12 +57,21 @@ public class UserDTO implements Serializable {
         this.userTypeId = userTypeId;
     }
 
+    public String getEmailContact() {
+        return emailContact;
+    }
+
+    public void setEmailContact(String emailContact) {
+        this.emailContact = emailContact;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
                 "username='" + username + '\'' +
                 ", userRealName='" + userRealName + '\'' +
                 ", userPassword='" + userPassword + '\'' +
+                ", emailContact='" + emailContact + '\'' +
                 ", userStatus=" + userStatus +
                 ", userTypeId=" + userTypeId +
                 '}';

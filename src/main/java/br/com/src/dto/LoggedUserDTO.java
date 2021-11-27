@@ -13,14 +13,16 @@ public class LoggedUserDTO implements Serializable {
     private String userRealName;
     private int userTypeId;
     private String jwtToken;
+    private String emailContact;
 
-    public LoggedUserDTO(Long userId, String username, String password, String userRealName, String jwtToken, int userTypeId) {
+    public LoggedUserDTO(Long userId, String username, String password, String userRealName, String jwtToken, int userTypeId, String emailContact) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.userRealName = userRealName;
         this.jwtToken = jwtToken;
         this.userTypeId = userTypeId;
+        this.emailContact = emailContact;
     }
 
     public Long getUserId() {
@@ -71,6 +73,14 @@ public class LoggedUserDTO implements Serializable {
         this.userTypeId = userTypeId;
     }
 
+    public String getEmailContact() {
+        return emailContact;
+    }
+
+    public void setEmailContact(String emailContact) {
+        this.emailContact = emailContact;
+    }
+
     @Override
     public String toString() {
         return "LoggedUserDTO{" +
@@ -80,6 +90,7 @@ public class LoggedUserDTO implements Serializable {
                 ", userRealName='" + userRealName + '\'' +
                 ", userTypeId=" + userTypeId +
                 ", jwtToken='" + jwtToken + '\'' +
+                ", emailContact='" + emailContact + '\'' +
                 '}';
     }
 }

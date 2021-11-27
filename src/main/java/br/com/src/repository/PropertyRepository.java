@@ -12,5 +12,13 @@ public interface PropertyRepository extends JpaRepository<PropertyEntity, Long> 
 
     Optional<List<PropertyEntity>> findAllByPropertyStatusIdIn(List<Long> propertyStatusId);
 
+    Optional<List<PropertyEntity>> findAllByPropertyStatusIdInAndPropertyPriceGreaterThanEqual(List<Long> propertyStatusId, Double priceMin);
+
+    Optional<List<PropertyEntity>> findAllByPropertyStatusIdInAndPropertyPriceLessThanEqual(List<Long> propertyStatusId, Double priceMax);
+
+    Optional<List<PropertyEntity>> findAllByPropertyStatusIdInAndPropertyPriceGreaterThanEqualAndPropertyPriceLessThanEqual(List<Long> propertyStatusId, Double priceMin, Double priceMax);
+
     Optional<PropertyEntity> findOneByPropertyId(Long propertyId);
+
+
 }

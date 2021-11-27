@@ -24,6 +24,8 @@ public class UserEntity implements Serializable {
     private int userTypeId;
     @Column(name = "userStatus")
     private boolean userStatus;
+    @Column(name = "email_contact")
+    private String emailContact;
 
     public Long getUserId() {
         return userId;
@@ -73,6 +75,14 @@ public class UserEntity implements Serializable {
         this.userTypeId = userTypeId;
     }
 
+    public String getEmailContact() {
+        return emailContact;
+    }
+
+    public void setEmailContact(String emailContact) {
+        this.emailContact = emailContact;
+    }
+
     @Override
     public String toString() {
         return "UserEntity{" +
@@ -82,6 +92,7 @@ public class UserEntity implements Serializable {
                 ", userPassword='" + userPassword + '\'' +
                 ", userTypeId=" + userTypeId +
                 ", userStatus=" + userStatus +
+                ", emailContact='" + emailContact + '\'' +
                 '}';
     }
 }
