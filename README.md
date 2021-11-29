@@ -1,8 +1,8 @@
-# approval-workflow-v2-backend
+# backend
 
 ## Executando o aplicativo localmente
 
-Existem várias maneiras de executar um aplicativo Spring Boot em sua máquina local. Uma maneira é executar o método `main` na classe` br/com/crearesistemas/frota/Application.java` do seu IDE.
+Existem várias maneiras de executar um aplicativo Spring Boot em sua máquina local. Uma maneira é executar o método `main` na classe  do seu IDE.
 
 - Faça o download do zip ou clone o repositório Git.
 - Descompacte o arquivo zip (se você tiver baixado)
