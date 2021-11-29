@@ -9,6 +9,7 @@ import br.com.src.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,6 +89,11 @@ public class PropertyServiceImpl implements PropertyService {
         propertyRepository.save(propertyEntity);
 
         return new ResponseResource(200,"Success",propertyDTO);
+    }
+
+    @Override
+    public Optional<List<PropertyEntity>> findPropertyListByUpdateDate(LocalDateTime minusDays) {
+        return propertyRepository.findAllByUpdatedAtLessThanEqual(minusDays);
     }
 
 
