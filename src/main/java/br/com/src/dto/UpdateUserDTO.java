@@ -11,6 +11,7 @@ public class UpdateUserDTO implements Serializable {
     private String userPassword;
     private String currentUserPassword;
     private String contactEmail;
+    private Long AlertId;
 
     public String getUsername() {
         return username;
@@ -60,6 +61,14 @@ public class UpdateUserDTO implements Serializable {
         this.contactEmail = contactEmail;
     }
 
+    public Long getAlertId() {
+        return AlertId;
+    }
+
+    public void setAlertId(Long alertId) {
+        AlertId = alertId;
+    }
+
     @Override
     public String toString() {
         return "UpdateUserDTO{" +
@@ -69,6 +78,7 @@ public class UpdateUserDTO implements Serializable {
                 ", userPassword='" + userPassword + '\'' +
                 ", currentUserPassword='" + currentUserPassword + '\'' +
                 ", contactEmail='" + contactEmail + '\'' +
+                ", AlertId=" + AlertId +
                 '}';
     }
 }

@@ -1,8 +1,10 @@
 package br.com.src.service.impl;
 
 import br.com.src.dto.PropertyDTO;
+import br.com.src.entity.AlertEntity;
 import br.com.src.entity.PropertyEntity;
 import br.com.src.exception.ResourceNotFoundException;
+import br.com.src.repository.AlertRepository;
 import br.com.src.repository.PropertyRepository;
 import br.com.src.resource.ResponseResource;
 import br.com.src.service.PropertyService;
@@ -18,6 +20,9 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Autowired
     PropertyRepository propertyRepository;
+
+    @Autowired
+    AlertRepository alertRepository;
 
     @Override
     public ResponseResource getPropertyList(Long propertyId, List<Long> propertyStatusId,  Double priceMin, Double priceMax) throws ResourceNotFoundException {
@@ -87,6 +92,14 @@ public class PropertyServiceImpl implements PropertyService {
         propertyEntity.setPicture5x64(propertyDTO.getPicture5x64());
         propertyEntity.setUserEditedId(userId.intValue());
         propertyRepository.save(propertyEntity);
+
+        Optional<AlertEntity> alertEntityOptional = alertRepository.findOneByPropertyIdAndAlertTypeAndShowAlert(propertyEntity.getPropertyId(),3L ,true);
+        if(alertEntityOptional.isPresent()){
+            AlertEntity alertEntity = alertEntityOptional.get();
+            alertEntity.setShowAlert(false);
+            alertRepository.save(alertEntity);
+        }
+
 
         return new ResponseResource(200,"Success",propertyDTO);
     }

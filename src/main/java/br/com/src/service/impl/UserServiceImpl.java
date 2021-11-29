@@ -3,8 +3,10 @@ package br.com.src.service.impl;
 import br.com.src.dto.AlertDTO;
 import br.com.src.dto.UpdateUserDTO;
 import br.com.src.dto.UserDTO;
+import br.com.src.entity.AlertEntity;
 import br.com.src.entity.UserEntity;
 import br.com.src.exception.PasswordException;
+import br.com.src.repository.AlertRepository;
 import br.com.src.repository.UserRepository;
 import br.com.src.resource.ResponseResource;
 import br.com.src.service.AlertService;
@@ -27,6 +29,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     AlertService alertService;
+
+    @Autowired
+    AlertRepository alertRepository;
 
     @Autowired
     CryptPassword cryptPassword;
@@ -90,6 +95,10 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = OptionalUserEntity.get();
         userEntity.setUserStatus(!userEntity.isUserStatus());
         userRepository.save(userEntity);
+
+        AlertEntity alertEntity = alertRepository.findOneByAlertId(updateUserDTO.getAlertId());
+        alertEntity.setShowAlert(false);
+        alertRepository.save(alertEntity);
         return new ResponseResource(200,"Success",  userEntity);
     }
 }

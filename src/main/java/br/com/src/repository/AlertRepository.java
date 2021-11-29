@@ -12,4 +12,6 @@ public interface AlertRepository extends JpaRepository<AlertEntity, Long> {
     AlertEntity findOneByAlertId(Long alertId);
 
     Optional<AlertEntity> findOneByShowAlertAndPropertyIdAndUserId(Boolean showAlert , Long propertyId, Long userId);
+
+    Optional<AlertEntity> findOneByPropertyIdAndAlertTypeAndShowAlert(Long propertyId, Long alertType, Boolean showAlert);
 }
