@@ -71,7 +71,7 @@ public class LoginServiceImpl implements LoginService {
                 userEntity.getUserPassword(),
                 userEntity.getUserRealName(),
                 null,
-                userEntity.getUserId().intValue(),
+                userEntity.getUserTypeId(),
                 userEntity.getEmailContact()
         );
     }

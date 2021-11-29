@@ -1,11 +1,13 @@
 package br.com.src.service.impl;
 
+import br.com.src.dto.AlertDTO;
 import br.com.src.dto.UpdateUserDTO;
 import br.com.src.dto.UserDTO;
 import br.com.src.entity.UserEntity;
 import br.com.src.exception.PasswordException;
 import br.com.src.repository.UserRepository;
 import br.com.src.resource.ResponseResource;
+import br.com.src.service.AlertService;
 import br.com.src.service.UserService;
 import br.com.src.util.auth.CryptPassword;
 import org.slf4j.Logger;
@@ -24,18 +26,29 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Autowired
+    AlertService alertService;
+
+    @Autowired
     CryptPassword cryptPassword;
 
     @Override
-    public ResponseResource postUser(UserDTO userDto) throws PasswordException {
+    public ResponseResource postUser(UserDTO userDto, Long userId) throws PasswordException {
+        Optional<UserEntity> userEntityOptional = userRepository.findOneByUserId(userId);
+        UserEntity requestUser =userEntityOptional.get();
+        Boolean isPending = requestUser.getUserTypeId() == 1;
+
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(userDto.getUsername());
         userEntity.setUserRealName(userDto.getUserRealName());
         userEntity.setUserPassword(cryptPassword.encode(userDto.getUserPassword()));
-        userEntity.setUserStatus(true);
+        userEntity.setUserStatus(!isPending);
         userEntity.setUserTypeId(userDto.getUserTypeId());
         userEntity.setEmailContact(userDto.getEmailContact());
-        userRepository.save(userEntity);
+        userEntity = userRepository.save(userEntity);
+
+        if(isPending){
+            alertService.postAlert(new AlertDTO(null, null,"O Usuário " +requestUser.getUserRealName()+ "("+requestUser.getUserId()+") está tentando criar um outro usuário chamado: "+userEntity.getUserRealName()+"("+userEntity.getUserId()+")",2L), userId);
+        }
         return new ResponseResource(200,"Success", userEntity);
     }
 
@@ -66,5 +79,17 @@ public class UserServiceImpl implements UserService {
             new ResponseResource(404,"Not found",null);
         }
         return new ResponseResource(200,"Success", userEntity.get());
+    }
+
+    @Override
+    public ResponseResource updateUserStatus(UpdateUserDTO updateUserDTO) throws PasswordException {
+        Optional<UserEntity> OptionalUserEntity = userRepository.findOneByUserId(Long.parseLong(updateUserDTO.getUserId()));
+        if(!OptionalUserEntity.isPresent()){
+            return new ResponseResource(404,"Not found",null);
+        }
+        UserEntity userEntity = OptionalUserEntity.get();
+        userEntity.setUserStatus(!userEntity.isUserStatus());
+        userRepository.save(userEntity);
+        return new ResponseResource(200,"Success",  userEntity);
     }
 }

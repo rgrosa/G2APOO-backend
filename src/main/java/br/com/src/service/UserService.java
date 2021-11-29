@@ -8,9 +8,11 @@ import br.com.src.resource.ResponseResource;
 
 public interface UserService {
 
-    ResponseResource postUser(UserDTO userDto) throws PasswordException;
+    ResponseResource postUser(UserDTO userDto, Long userId) throws PasswordException;
 
     ResponseResource putUser(UpdateUserDTO updateUserDTO) throws PasswordException;
 
     ResponseResource getUser(Long userId) throws PasswordException;
+
+    ResponseResource updateUserStatus(UpdateUserDTO updateUserDTO) throws PasswordException;
 }

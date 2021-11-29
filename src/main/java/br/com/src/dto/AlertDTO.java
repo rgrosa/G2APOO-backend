@@ -6,10 +6,17 @@ public class AlertDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    Long propertyId;
-    Long alertId;
+    Long   propertyId;
+    Long   alertId;
     String message;
-    Long alertType;
+    Long   alertType;
+
+    public AlertDTO(Long propertyId, Long alertId, String message, Long alertType) {
+        this.propertyId = propertyId;
+        this.alertId = alertId;
+        this.message = message;
+        this.alertType = alertType;
+    }
 
     public Long getPropertyId() {
         return propertyId;

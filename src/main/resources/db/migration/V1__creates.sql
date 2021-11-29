@@ -64,8 +64,9 @@ CREATE TABLE IF NOT EXISTS ALERT_TYPES (
 );
 
 insert into ALERT_TYPES(ALERT_TYPE_ID, ALERT_NAME) values (1,'Solicitacao de propriedade') ON CONFLICT (ALERT_TYPE_ID)  DO NOTHING;
-insert into ALERT_TYPES(ALERT_TYPE_ID, ALERT_NAME) values (2,'Solicitacao de usuario')ON CONFLICT (ALERT_TYPE_ID)  DO NOTHING;
+insert into ALERT_TYPES(ALERT_TYPE_ID, ALERT_NAME) values (2,'Criação de Usuário')ON CONFLICT (ALERT_TYPE_ID)  DO NOTHING;
 insert into ALERT_TYPES(ALERT_TYPE_ID, ALERT_NAME) values (3,'Dias sem atualizacao')ON CONFLICT (ALERT_TYPE_ID)  DO NOTHING;
+insert into ALERT_TYPES(ALERT_TYPE_ID, ALERT_NAME) values (4,'Criação de Propriedade')ON CONFLICT (ALERT_TYPE_ID)  DO NOTHING;
 
 insert into USER_TYPE (USER_TYPE_ID, USER_TYPE_NAME) values (1,'User')ON CONFLICT (USER_TYPE_ID)  DO NOTHING;
 insert into USER_TYPE (USER_TYPE_ID, USER_TYPE_NAME) values (2,'Owner')ON CONFLICT (USER_TYPE_ID)  DO NOTHING;
@@ -89,6 +90,6 @@ u.EMAIL_CONTACT,
 p.PROPERTY_ADDRESS
 FROM ALERT_INBOX ai
 join USERS u on ai.USER_ID = u.user_id
-join PROPERTY p on ai.property_id = p.property_id
+LEFT join PROPERTY p on ai.property_id = p.property_id
 join ALERT_TYPES ap on ai.alert_type = ap.alert_type_id
 where SHOW_ALERT = true;

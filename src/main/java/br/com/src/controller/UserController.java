@@ -20,9 +20,9 @@ public class UserController {
 
     @PostMapping("/user")
     public ResponseEntity<ResponseResource> postUser(
-            @RequestBody UserDTO userDto) throws Exception {
+            @RequestBody UserDTO userDto, Principal user) throws Exception {
         return ResponseEntity.ok().
-                body(userService.postUser(userDto));
+                body(userService.postUser(userDto, JwtTokenUtil.getIdFromCurrentUser(user)));
     }
 
     @PostMapping("/user-update")
@@ -30,6 +30,13 @@ public class UserController {
             @RequestBody UpdateUserDTO updateUserDTO) throws Exception {
         return ResponseEntity.ok().
                 body(userService.putUser(updateUserDTO));
+    }
+
+    @PostMapping("/user-update/status")
+    public ResponseEntity<ResponseResource> updateUserStatus(
+            @RequestBody UpdateUserDTO updateUserDTO) throws Exception {
+        return ResponseEntity.ok().
+                body(userService.updateUserStatus(updateUserDTO));
     }
 
     @GetMapping("/user")

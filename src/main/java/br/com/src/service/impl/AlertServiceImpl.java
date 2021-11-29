@@ -73,7 +73,7 @@ public class AlertServiceImpl implements AlertService {
                 AlertEntity alertEntity = new AlertEntity();
                 alertEntity.setPropertyId(propertyEntity.getPropertyId());
                 alertEntity.setUserId(adminUser);
-                alertEntity.setAlertMessage("Propriedade sem receber uma atualização em seu cadastro a mais de "+dateOffset+"dias, Recomendado atualizar o anuncio!");
+                alertEntity.setAlertMessage("Propriedade sem receber uma atualização em seu cadastro a mais de "+dateOffset+" dias, Recomendado atualizar o anuncio!");
                 alertEntity.setAlertType(3L);
                 alertEntity.setShowAlert(true);
                 alertRepository.save(alertEntity);
